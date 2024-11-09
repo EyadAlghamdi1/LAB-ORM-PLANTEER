@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+{% block style %}{% endblock %}
+
+{% block content %}
+
+<div class="container p-5">
+  <h1 class="mb-4 text-center">All Plants</h1>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% for plant in plants %}
+      <div class="col">
+          <div class="card h-100">
+              <img src="{{ plant.image.url }}" class="card-img-top" alt="{{ plant.name }}" style="height: 200px; object-fit: cover;">
+              <div class="card-body">
+                  <h5 class="card-title">{{ plant.name }}</h5>
+                  <p class="card-text">{{ plant.category }}</p>
+                  <a href="{% url 'plant:detail_view' plant.id %}" class="btn btn-dark">More details</a>
+              </div>
+          </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

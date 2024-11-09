@@ -1,9 +1,62 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Contact Us{% endblock %}
+{% block title %}detail{% endblock %}
+{% block style %}
+<style>
+.small-card {
+    max-width: 400px; 
+    margin: auto;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
 
+<div class="container my-5">
+    <div class="card mb-3 small-card">
+        <img src="{{ plant_detail.image.url }}" class="card-img-top" alt="{{ plant_detail.name }}" style="height: 300px; object-fit: cover;">
+        <div class="card-body">
+            <h3 class="card-title">{{ plant_detail.name }}</h3>
+            <h5 class="text-muted">{{ plant_detail.category }}</h5>
+            <p class="card-text"><strong>About the :</strong>{{ plant_detail.about }}</p>
+            <p class="card-text"><strong>Used For:</strong> {{ plant_detail.used_for }}</p>
+            <p class="card-text">
+                <strong>Is it edible?</strong> 
+                {% if plant_detail.is_edible %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </p>
+            <a href="{% url 'plant:all_view' %}" class="btn btn-dark">Back to All Plants</a>
+            <a href="{% url 'plant:update_view' plant_detail.id %}" class="btn btn-dark">Update</a>
+            <a href="{% url 'plant:delete_view' plant_detail.id %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>
+<div class="container my-5">
+    <h2 class="fw-bold">Related Plants</h2>
+    <p class="text-muted">Learn more about this field</p>
+    <div class="row">
+        {% for plant in featured_plants %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ plant.image.url }}" class="card-img-top" alt="{{ plant.name }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ plant.name }}</h5>
+                    <p class="text-muted">{{ plant.category }}</p>
+                    <a href="{% url 'plant:detail_view' plant.id %}" class="btn btn-dark">More details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-end mt-3">
+        <a href="{% url 'plant:all_view' %}" class="btn btn-link" style="text-decoration: none;">More →</a>
+    </div>
+</div>
+</div>
 
 
 

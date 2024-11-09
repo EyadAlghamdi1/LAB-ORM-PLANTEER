@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Search{% endblock %}
+{% block style %}{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+    <h2 class="fw-bold">Search Results</h2>
+    <form method="GET" action="{% url 'plant:search_view' %}">
+        <div class="input-group mb-3">
+            <input type="text" name="word" class="form-control" placeholder="Search .. " aria-label="Search " required>
+            <button class="btn btn-dark" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+<div class="container my-5">
+    <h2 class="fw-bold">Search Results for "{{ word }}"</h2>
+        <div class="row">
+            {% for plant in results %}
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <img src="{{ plant.image.url }}" class="card-img-top" alt="{{ plant.name }}" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ plant.name }}</h5>
+                            <p class="text-muted">{{ plant.category }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+</div>
+{% endblock %}

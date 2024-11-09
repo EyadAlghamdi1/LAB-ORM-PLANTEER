@@ -4,28 +4,55 @@
 
 {% block style %}
 <style>
-    .main {
-        background-image: url("{% static 'images/Planteer_main.jpg' %}");
+.main {
+        background-image: url("../static/images/home.png");
         background-size: cover; 
         background-position: center; 
         background-repeat: no-repeat; 
     }
+.btn-link {
+    text-decoration: none;
+    color: #000;
+}
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="main">
-    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary main">
         <div class="col-md-6 p-lg-5 mx-auto my-5">
             <h1 class="display-3 fw-bold">Planteer</h1>
             <h3 class="fw-normal text-muted mb-3">Plant Database For Plant Lovers</h3>
             <div class="d-flex gap-3 justify-content-center lead fw-normal">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-dark" type="submit">Search</button>
-                </form> 
+                
+                <form class="d-flex" role="search" method="GET" action="{% url 'plant:search_view' %}">
+                    <input class="form-control me-2" type="search" name="word" placeholder="Search" aria-label="Search" required>
+                    <button class="btn btn-dark" type="submit">Search</button>
+                </form>                
             </div>
         </div>
     </div>
+</div>
+<div class="container my-5">
+    <h2 class="fw-bold">Plants</h2>
+    <p class="text-muted">Learn more about plants</p>
+    <div class="row">
+        {% for plant in featured_plants %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ plant.image.url }}" class="card-img-top" alt="{{ plant.name }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ plant.name }}</h5>
+                    <p class="text-muted">{{ plant.category }}</p>
+                    <a href="{% url 'plant:detail_view' plant.id %}" class="btn btn-dark">More details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-end mt-3">
+        <a href="{% url 'plant:all_view' %}" class="btn btn-link">More →</a>
+    </div>
+</div>
 </div>
 {% endblock %}
